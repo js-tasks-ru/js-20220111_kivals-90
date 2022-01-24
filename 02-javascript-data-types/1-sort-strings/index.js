@@ -5,5 +5,9 @@
  * @returns {string[]}
  */
 export function sortStrings(arr, param = 'asc') {
+  function nativeSort(a, b) {
+    return a.localeCompare(b, undefined, { caseFirst: 'upper' });
+  }
 
+  return param === 'asc' ? [...arr].sort(nativeSort) : [...arr].sort(nativeSort).reverse();
 }
