@@ -24,7 +24,7 @@ export default class ColumnChart {
    */
   getTemplate() {
     return `
-      <div class="column-chart" style="--chart-height: 50">
+      <div class="column-chart" style="--chart-height: ${this.chartHeight}">
         <div class="column-chart__title">
           <a href="#" class="column-chart__link">View all</a>
         </div>
