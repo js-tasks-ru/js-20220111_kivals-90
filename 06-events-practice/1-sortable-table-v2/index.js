@@ -9,19 +9,11 @@ export default class SortableTable {
     if (sorted) {
       this.data = this.getSortedData(sorted.id, sorted.order)
     }
-    // this.prepareData();
 
     this.render();
 
-    this.addEventListeners();
+    this.initEventListeners();
   }
-
-  // prepareData() {
-  //   const { id, order } = this.sorted;
-  //   const defaultHeaderItem = this.headerConfig.find(item => item.id === id);
-  //   defaultHeaderItem.defaultSort = true;
-  //   defaultHeaderItem.defaultSortOrder = order || 'asc';
-  // }
 
   getTemplate() {
     return `
@@ -38,20 +30,25 @@ export default class SortableTable {
     `;
   }
 
-  addEventListeners() {
-    this.subElements.header.addEventListener('click', this.headerHandlerClick.bind(this));
+  initEventListeners() {
+    this.subElements.header.addEventListener('pointerdown', this.headerHandlerClick.bind(this));
   }
 
   headerHandlerClick(event) {
-    //Очищаем сортировку в хедере
-    this.subElements.header.querySelectorAll('.sortable-table__cell').forEach( cell => cell.dataset.order = '');
-
     const headerTarget = event.target.closest('.sortable-table__cell');
     const fieldId = headerTarget.dataset.id;
-    const isSortable = headerTarget.data.sortable;
-    const order = headerTarget.data.order || 'asc';
-    console.log(headerTarget);
+    const isSortable = headerTarget.dataset.sortable === 'true';
 
+    let order = 'desc';
+    if (headerTarget.dataset.order) {
+      order = headerTarget.dataset.order === 'asc' ? 'desc' : 'asc';
+    }
+
+    if (isSortable) {
+      //Очищаем сортировку в хедере
+      this.subElements.header.querySelectorAll('.sortable-table__cell').forEach( cell => cell.dataset.order = '');
+      this.sort(fieldId, order);
+    }
   }
 
 
