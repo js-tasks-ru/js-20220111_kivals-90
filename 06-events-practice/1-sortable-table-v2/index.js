@@ -31,10 +31,10 @@ export default class SortableTable {
   }
 
   initEventListeners() {
-    this.subElements.header.addEventListener('pointerdown', this.headerHandlerClick.bind(this));
+    this.subElements.header.addEventListener('pointerdown', this.headerHandlerClick);
   }
 
-  headerHandlerClick(event) {
+  headerHandlerClick = (event) => {
     const headerTarget = event.target.closest('.sortable-table__cell');
     const fieldId = headerTarget.dataset.id;
     const isSortable = headerTarget.dataset.sortable === 'true';

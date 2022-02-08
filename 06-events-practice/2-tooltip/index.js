@@ -10,26 +10,26 @@ class Tooltip {
   }
 
   initialize () {
-    document.addEventListener('pointerover', this.pointeroverHandler.bind(this));
-    document.addEventListener('pointerout', this.pointeroutHandler.bind(this));
+    document.addEventListener('pointerover', this.pointeroverHandler);
+    document.addEventListener('pointerout', this.pointeroutHandler);
   }
 
-  pointeroverHandler(event) {
-    let tooltipElement = event.target.closest('[data-tooltip]');
+  pointeroverHandler = (event) => {
+    const tooltipElement = event.target.closest('[data-tooltip]');
     if (tooltipElement) {
       const tooltipText = tooltipElement.dataset.tooltip;
       this.render(event, tooltipText);
-      document.addEventListener('pointermove', this.pointerMoveHandler.bind(this));
+      document.addEventListener('pointermove', this.pointerMoveHandler);
     }
   }
 
-  pointerMoveHandler(event) {
+  pointerMoveHandler = (event) => {
     const shift = 25;
     this.element.style.left = event.clientX + shift + 'px';
     this.element.style.top = event.clientY + shift + 'px';
   }
 
-  pointeroutHandler() {
+  pointeroutHandler = () => {
     this.remove();
     document.removeEventListener('pointermove', this.pointerMoveHandler);
   }
